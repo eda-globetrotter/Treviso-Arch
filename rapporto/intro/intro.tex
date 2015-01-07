@@ -1,0 +1,111 @@
+%	This is written by Zhiyang Ong as a template for writing reports.
+
+%	The MIT License (MIT)
+
+%	Copyright (c) <2014> <Zhiyang Ong>
+
+%	Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+%	The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+%	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+%	Email address: echo "cukj -wb- 23wU4X5M589 TROJANS cqkH wiuz2y 0f Mw Stanford" | awk '{ sub("23wU4X5M589","F.d_c_b. ") sub("Stanford","d0mA1n"); print $5, $2, $8; for (i=1; i<=1; i++) print "6\b"; print $9, $7, $6 }' | sed y/kqcbuHwM62z/gnotrzadqmC/ | tr 'q' ' ' | tr -d [:cntrl:] | tr -d 'ir' | tr y "\n"
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introduction to Processor Architecture}
+\label{sec:IntroProcessorArchitecture}
+
+Current and emerging trends in ``Big Data'' \cite{BilbaoOsorio2014,Wedewer2013,Manyika2011a}, Internet of Things \cite{Witchalls2013}, and cyber-physical systems \cite{PCAST2013} drive a need for energy-efficient computing. From mobile devices to high-performance super computing, the power consumption and cost of cooling these computers have become so dominant that they have become a barrier to improving the performance of computers \cite{Hennessy2012,Fuller2011}. Without better computers, it can be harder for companies to sell computers to consumers and enterprises. \\
+
+Furthermore, computer architecture is a difficult subject to teach, especially at the undergraduate level \cite{Yurcik2002}. Due to the demand for high-performance, energy-efficient processors \cite{Duranton2013}, we need to train more highly-skilled computer engineering students to pursue careers in the field of computer architecture. In addition, before students and professionals can tackle grand challenges in computer architecture \cite{Track2014}, they need to master the basics of modern processor design. \\
+
+To quantify the improvements made to a processor's/computer's performance, we need to determine how much a processor's/computer's performance has improved compared to the best processor/computer for a generic set of software applications. We can also do likewise for a specific category of usage/applications. In order to reduce experimental bias, a standard benchmark suite for a specific category of computers (e.g., embedded processors, general-purpose multi-core processors, or graphics processors) shall be used to evaluate the performance and power consumption of computers \cite{Bertozzi2009}. For example, for evaluating the performance of single-threaded, single-core processors (or uniprocessors), the benchmark suite from the {\it Standard Performance Evaluation Corporation (SPEC)} \cite{SPEC2014} can be used. For multi-threaded, chip multiprocessors (CMP) \cite{Olukotun2007}, benchmark suites from the {\it Princeton Application Repository for Shared-Memory Computers (PARSEC)} \cite{Bienia2011,CSPrinceton2010} and {\it SPLASH-2} \cite{Venetis2007} shall be used. \\
+
+%The performance speedup of computers, including single-core processors, due to improvements made to a component can be evaluated with Amdahl's law \cite{Hennessy2012} (see Equation \ref{eqn:Amdahlslaw}); Amdahl's law can also be extended for improvements to a diverse a set of components \cite{Shen2005a}.
+When the performance of a computer's component is improved, the resultant performance speedup for that computer can be evaluated with Amdahl's law \cite{Hennessy2012} (see Equation \ref{eqn:Amdahlslaw}); Amdahl's law can be extended for improvements made to a diverse a set of components \cite{Shen2005a}.
+\begin{equation}
+\label{eqn:Amdahlslaw}
+{\rm Performance\ speedup} = \frac{1}{(1 - {\rm proportion\ of\ speedup}) + \frac{\rm proportion\ of\ speedup}{\rm speedup}}
+\end{equation}
+
+That is, when the performance of a component is improved by {\it x} and this component makes up {\it y\%} of the computer system's resources for computation, the overall performance speedup for this computer system is given by: $\frac{1}{(100\% - y\%) + \frac{y\%}{x}}$. In general, performance speedup is considered to be the ratio of the execution times or the performance of the two computers ($X$ and $Y$); see Equation \ref{eqn:performancespeedup} \cite{Hennessy2012}. \\
+
+\begin{equation}
+\label{eqn:performancespeedup}
+{\rm Performance\ speedup}, n = \frac{{\rm performance\ of\ }X}{{\rm performance\ of\ }Y} = \frac{{\rm execution\ time\ of\ }Y}{{\rm execution\ time\ of\ }X}
+\end{equation}
+
+From Equation \ref{eqn:performancespeedup}, the performance speedup gained by computer $X$ over computer $Y$ is $n$. That is, $X$ is $n$ times faster than $Y$. \\
+
+The ``iron law'' \cite{Shen2005a} to determine the execution time of a processor is given as follows in Equation \ref{eqn:ironlaw} \cite{Hennessy2012}.
+\begin{equation}
+\label{eqn:ironlaw}
+{\rm Execution\ time} = IC \times CPI \times CCT,
+\end{equation}
+where $IC$ refers to instruction count (or number of instructions in the benchmark program), $CPI$ refers to cycles per instruction (i.e., average number of clock cycles to execute an instruction), and $CCT$ refers to clock cycle time (or ``global'' clock period of the processor). The execution time is inversely proportional to the computer's performance; see Equation \ref{eqn:performanceexecutiontime} \cite{Patterson2005}.
+
+\begin{equation}
+\label{eqn:performanceexecutiontime}
+{\rm performance} = \frac{1}{\rm execution\ time}
+\end{equation}
+
+To evaluate the performance of two computers $X$ and $Y$ using computer $Z$ as a reference computer for benchmarking, determine the {\it SPECRatio}s of $X$ and $Y$ for a given benchmark {\it bmk}$_{i}$ by normalizing the performance of $X$ and that of $Y$ with respect to $Z$. Hence, Equation \ref{eqn:performancespeedup} becomes the ratio of the {\it SPECRatio}s for $X$ and $Y$ \cite{Hennessy2012}:
+\begin{equation}
+\label{eqn:specratioxy}
+{\rm Performance\ speedup}, n = \frac{\it SPECRatio_{X}}{\it SPECRatio_{Y}} = \frac{(\frac{{\rm execution\ time\ of\ }Z}{{\rm execution\ time\ of\ }X})}{(\frac{{\rm execution\ time\ of\ }Z}{{\rm execution\ time\ of\ }Y})} = \frac{(\frac{{\rm performance\ of\ }X}{{\rm performance\ of\ }Z})}{(\frac{{\rm performance\ of\ }Y}{{\rm performance\ of\ }Z})} = \frac{{\rm performance\ of}\ X}{{\rm performance\ of}\ Y}
+\end{equation}
+
+Consequently, to determine the average performance speedup for $X$ over $Y$, one needs to determine the geometric mean of the performance speedup of $X$ over $Y$ for each benchmark. For a given set of $n$ benchmarks, this geometric mean is determined as follows \cite{Hennessy2012}:
+\begin{equation}
+\label{eqn:GeometricMeanofSPECRatioXY}
+{\rm Performance\ speedup}, n = \sqrt[n]{\displaystyle\prod^{n}_{i = 1} \frac{\it SPECRatio_{X}}{\it SPECRatio_{Y}}} = \sqrt[n]{\displaystyle\prod^{n}_{i = 1} \frac{{\rm performance\ of\ }X_{i}}{{\rm performance\ of\ }Y_{i}}}
+\end{equation}
+
+Here, ``performance of X$_{i}$'' and ``performance of Y$_{i}$'' refer to the performances of computers $X$ and $Y$ for the benchmark {\it bmk}$_{i}$, and $i$ denotes the $i^{\rm th}$ benchmark in the set of $n$ benchmarks. \\
+
+Before proceeding to discuss various techniques for improving the performance of computers, we need to put things in perspective. Computer architecture defines the interface between hardware and software (i.e., the hardware/software interface) with the instruction set architecture (ISA), and a given microarchitecture is an implementation of the ISA. Thus, for a given ISA, many microarchitectures can implement that ISA \cite{Hennessy2012,Shen2005a}. In turn, the microarchitecture is implemented as a digital integrated circuit (IC) or very-large-scale integrated (VLSI) system. VLSI system designs begin with developing hardware behavioral models at the register-transfer level (RTL), which require a lot of engineers and time to create; these behavioral RTL models also take a long time to simulate. To speed up the process of designing microarchitectures, processor simulators can be developed and modified to explore different microarchitecture designs (i.e., design space exploration). This is because processor simulators simulate faster than behavioral RTL models \cite{Vachharajani2004,Monchiero2008,Bailey2010a,Bailey2007,Kempf2011,Leupers2010,Shen2005a}. An example of a processor simulator for single-core processors is {\it SimpleScalar 3.0} \cite{SimpleScalar2004}, and an example of a processor simulator for multi-core processors is {\it gem5} \cite{Binkert2011,gem5developers2014}. \\
+
+This report aims to help students and junior professionals acquire the basics of modern processor design for single-core processors. It will cover different techniques of designing processor architecture (or microarchitecture), and how each processor design can be evaluated for its performance; in this report, the terms processor architecture and microarchitecture will be used interchangeably. The techniques covered include single-cycle processors, multi-cycle processors, pipelined processors, and superscalar processors. However, the following topics are beyond the scope of this report: memory system design \cite{Jacob2008,Jacob2009,Sorin2011}, such as cache design \cite{Balasubramonian2011}; multi-core and many-core processor design \cite{Keckler2009,Dubois2012,Olukotun2007,Hubner2011,Culler1999,Nemirovsky2013}; embedded processors \cite{Kornaros2010,Nurmi2007,Jerraya2005,Sriram2009,Wolf2007,Ienne2007} or low-power and energy-efficient processors \cite{Oklobdzija2006,Kaxiras2008}; data center computers \cite{Barroso2013,Abts2011} and high-performance computing \cite{Levesque2011,Yang2006,Hager2011,Lanzagorta2009}; application-specific processors \cite{Hager2011,Kempf2011,Bhattacharyya2010,Fisher2005,Crowley2003,Crowley2004,Crowley2005,Giladi2008,Lekkas2003,Henkel2007,Kim2012}; and network-on-chips (i.e., on-chip interconnect networks) \cite{Dally2004,DeMicheli2006,Gebali2009,Jantsch2003,Jerger2009,Chen2012b,Cota2012,Flich2011,Murali2009,Nicopoulos2009,Nurmi2004,Ogras2013,Pasricha2008,Phan2012,Silvano2011}. It assumes that the reader has significant experience in designing digital ICs or VLSI systems \cite{Arora2012,Kang2003a,Rabaey2003,Weste2011,Wolf2009}, is familiar with working with a {\it UNIX}-like operating system (e.g., {\it Linux}) \cite{Blum2008,Petersen2008,Rosen2007a}, has mastered the basics of computer system organization \cite{Patterson2009,Stallings2013,Tanenbaum2013,Dandamudi2003,AbdElBarr2005}, and can develop software \cite{Pressman2010,Schach2008,Bruegge2010,Sommerville2007}. Lastly, the ISA used in this report is the {\it MIPS} ISA, where {\it MIPS} refers to the architecture and assembly programming language for {\it Microprocessor without Interlocked Pipeline Stages (MIPS)}. I have chosen the {\it MIPS} ISA because of its simplicity; the {\it MIPS} ISA is a classic specification for a reduced instruction set computer (RISC) \cite{Hennessy2012,Patterson2009,Sweetman2007}. \\
+
+The rest of this report is organized as follows. In Section \ref{sec:SingleCycleProcessorDesign}, I present the fundamental principles of designing a processor that executes each instruction in a single clock cycle. Following that in Section \ref{sec:MultiCycleProcessorDesign}, I modify the architecture of the processor to enable instructions to execute in multiple clock cycles, so that the performance of the processor can be improved. Subsequently, in Section \ref{sec:PipelinedProcessorDesign}, I introduce the notion of pipelining and use pipelining to improve execution of computer programs by modifying the microarchitecture. Next, superscalar processors that can issue multiple instructions per clock cycle are briefly described in Section \ref{sec:SuperscalarProcessorDesign}. Finally, in Section \ref{sec:Conclusion}, conclusions are drawn from designing processors using the aforementioned techniques.
+
+
+
+%    Generic: \vspace{-0.3cm}
+%    \begin{enumerate} \itemsep -4pt
+%    \item Poor: \vspace{-0.3cm}
+%            	\begin{enumerate} \itemsep -2pt
+%            	\item \cite{Null2012}
+%            	\item \cite{DumasII2006}
+%            	\item \cite{Baer2009}
+%            	\item \cite{Gonzalez2011}
+%            	\item \cite{Murdocca2000}
+%            	\item \cite{Parhami2005} (not available)
+%            	\item \cite{Shiva2000}
+%            	\item \cite{Shiva2008}
+%            	\item parallel: \vspace{-0.2cm}
+%            		\begin{enumerate} \itemsep -2pt
+%            		\item \cite{ElRewini2005}
+%            		\end{enumerate}
+%            	\end{enumerate}
+%    \item Good: \vspace{-0.3cm}
+%            	\begin{enumerate} \itemsep -2pt
+%            	\item \cite{Flynn1995}, chapter 4 on pipelined processors
+%            	\item \cite{Harris2007}
+%            	\item \cite{Harris2013}
+%            	\item \cite{Mueller2000}
+%            	\item \cite{Page2009}
+%            	\item \cite{Silc1999}
+%            	\item \cite{Omondi1999}
+%            	\end{enumerate}
+%    \end{enumerate}
+
+
+
+
+
+
